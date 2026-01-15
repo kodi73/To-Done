@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.header {
+  background: #222;
+  color: white;
+  padding: 16px;
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+.sidebar {
+  width: 250px;
+  background: #f0f0f0;
+  padding: 10px;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+button {
+  display: block;
+  margin: 6px 0;
+  padding: 8px;
+  width: 100%;
+}
+
+.todo {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-form input,
+.todo-form select {
+  display: block;
+  margin: 6px 0;
+  width: 100%;
+  padding: 6px;
+}
+

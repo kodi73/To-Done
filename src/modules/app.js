@@ -1,5 +1,6 @@
 import { createProject } from "./project";
 import { saveAppState, loadAppState } from "./storage";
+import { createTodo } from "./todo";
 
 let state = {
     projects: [],
@@ -32,4 +33,17 @@ export function addProject(name) {
 export function setActiveProject(projectID) {
     state.activeProjectID = projectID;
     saveAppState(state);
+}
+
+export function addTodo(title, description, dueDate, priority) {
+    const todo = createTodo(title, description, dueDate, priority);
+    const project = state.projects.find(p => p.id === state.activeProjectID);
+    project.todos.push(todo);
+    saveAppState();
+}
+
+export function deleteTodo(todoID) {
+    const project = state.projects.find(p => p.id === state.activeProjectID);
+    project.todos = project.todos.filter(todos => todo.id !== todoID);
+    saveAppState();
 }
