@@ -54,6 +54,11 @@ function renderProjects() {
     const projectBtn = document.createElement("button");
     projectBtn.textContent = project.name;
 
+    if (project.id === state.activeProjectId) {
+  projectBtn.style.background = "#ddd";
+}
+
+
     projectBtn.onclick = () => {
       setActiveProject(project.id);
       renderTodos();
@@ -83,6 +88,16 @@ function renderTodos() {
   const state = getState();
   const project = state.projects.find(p => p.id === state.activeProjectId);
   if (!project) return;
+
+  const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = todo.completed;
+
+    checkbox.onchange = () => {
+    todo.completed = checkbox.checked;
+    renderTodos();
+    };
+
 
   const title = document.createElement("h2");
   title.textContent = project.name;
@@ -144,7 +159,10 @@ function showTodoForm() {
     const date = document.getElementById("todo-date").value;
     const priority = document.getElementById("todo-priority").value;
 
-    if (!title || !date) return alert("Title and date required");
+    if (!title || !date) {
+        alert("Please provide both title and due date.");
+        return;
+    }
 
     addTodo(title, desc, date, priority);
     renderTodos();
@@ -152,7 +170,22 @@ function showTodoForm() {
 }
 
 function showTodoDetails(todo) {
-  alert(
-    `Title: ${todo.title}\nDescription: ${todo.description}\nDue: ${todo.dueDate}\nPriority: ${todo.priority}`
-  );
+  const modal = document.createElement("div");
+  modal.classList.add("modal");
+
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h3>${todo.title}</h3>
+      <p><strong>Description:</strong> ${todo.description || "None"}</p>
+      <p><strong>Due Date:</strong> ${todo.dueDate}</p>
+      <p><strong>Priority:</strong> ${todo.priority}</p>
+      <button id="close-modal">Close</button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  document.getElementById("close-modal").onclick = () => {
+    modal.remove();
+  };
 }

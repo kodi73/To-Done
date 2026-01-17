@@ -25,6 +25,8 @@ export function getState() {
 }
 
 export function addProject(name) {
+    if (!name || name.trim() === "") return alert("Project name required");
+
     const project = createProject(name);
     state.projects.push(project);
     saveAppState(state);
@@ -46,4 +48,8 @@ export function deleteTodo(todoID) {
     const project = state.projects.find(p => p.id === state.activeProjectID);
     project.todos = project.todos.filter(todos => todo.id !== todoID);
     saveAppState();
+}
+
+export function updateState() {
+  saveAppState(state);
 }
